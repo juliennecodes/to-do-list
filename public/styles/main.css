@@ -1,3 +1,37 @@
-h1 {
+body, h1, p , ul, li{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+body, h1, p {
   font-family: 'Varela Round', sans-serif;
+  color: hsl(240, 5%, 10%);
+}
+
+.to-do-list {
+  border: solid 8px hsl(240, 5%, 20%);
+  border-radius: 3px;
+  width: 540px;
+  margin: 0 auto;
+  height: 72vh;
+  margin-top: 10vh;
+  position: relative;
+  padding: 24px;
+}
+
+.title{
+  font-size: 36px;
+}
+
+.textbox {
+  position: absolute;
+  bottom: 0;
+  margin: 0 0 16px;
+}
+
+.task{
+  margin-top:36px;
+  font-size: 18px;
+  line-height: 1.5;
 }

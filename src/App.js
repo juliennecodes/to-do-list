@@ -3,8 +3,7 @@ import {Textbox} from './pages/Textbox';
 
 function App() {
   return (
-    <div>
-      <h1>Manageable to do list</h1>
+    <div className = "to-do-list">
       <Tasks />
       <Textbox />
     </div>

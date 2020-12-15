@@ -1,8 +1,9 @@
 export function Tasks(){
   return (
-    <>
-      <p>Task 1</p>
-      <p>Task 2</p>
-    </>
+    <ul className="title">
+    Manageable to do list
+      <li className="task">Task 1</li>
+      <li className="task">Task 2</li>
+    </ul>
   )
 };
