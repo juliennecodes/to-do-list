@@ -13,3 +13,11 @@ export function Task({task, finishTask}){
 // <li onClick={(e)=> console.log(e.target.textContent)} className="task">
 //   {task}
 // </li>
+
+// <li onClick={(e)=> setFinishedTask(e.target.textContent)} className="task">
+//   {task}
+// </li>
+
+// <li onClick={(e)=> console.log(e.target.textContent)} className="task">
+//   {task}
+// </li>

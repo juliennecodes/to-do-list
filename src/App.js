@@ -30,9 +30,6 @@ function App() {
     .then(updatedTasks => setTasks(updatedTasks));
   };
 
-
-
-
   return (
     <div className = "to-do-list">
       <Tasks tasks={tasks} finishTask ={finishTask}/>
