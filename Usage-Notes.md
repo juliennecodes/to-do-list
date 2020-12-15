@@ -5,7 +5,7 @@ Tasks shows up
 
 Situation: once five tasks are written, user can no longer type more tasks
 User clicks on the text box to type another task =>
-Message pops up saying, "You look like you have your plate full"
+Textbox and button gets disabled
 
 User clicks on the task =>
 Task disappears
@@ -24,10 +24,7 @@ Tasks shows up
 ##
 Situation: once five tasks are written, user can no longer type more tasks
 User clicks on the text box to type another task =>
-Message pops up saying, "You look like you have your plate full"
-- user clicks on the text box
-- if a user clicks on it, a message pops up, telling the user they have their plates full
-  - brainstorm - create element, component? appended to...hmmm, maybe just span? and it disappears if you click anywhere in the document or automatically in five seconds
+Textbox and button gets disabled
 
 ##
 User clicks on the task =>

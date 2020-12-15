@@ -1,9 +1,13 @@
-export function Tasks(){
+import {Task} from './Task';
+export function Tasks({tasks}){
   return (
     <ul className="title">
     Manageable to do list
-      <li className="task">Task 1</li>
-      <li className="task">Task 2</li>
+      {
+        tasks.map(task => {
+          return <Task task={task}/>
+        })
+      }
     </ul>
   )
 };
