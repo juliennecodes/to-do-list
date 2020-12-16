@@ -19,7 +19,6 @@ app.post("/tasks", (req, res)=>{
 app.delete("/delete-task", (req, res)=>{
   const finishedTask = req.body.finishedTask;
   deleteTask(finishedTask);
-  console.log(tasks);
   res.json(tasks);
 });
 

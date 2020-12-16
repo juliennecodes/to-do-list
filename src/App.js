@@ -16,18 +16,10 @@ function App() {
       setTasks(JSON.parse(previousTasks ))
     }
   }, []);
-  //this looks into local storage
-  //you provide the name of the thing you're looking for
-  //assign it to a binding
-  //if the thing you're looking for exists, set it as the value for your the state that you want to persist
 
   useEffect(()=>{
     localStorage.setItem('serverTasks', JSON.stringify(tasks))
   }, [tasks]);
-  //this keeps things in local storage
-  //first argument is what you name what you're keeping
-  //second argument is the thing you're keeping
-  //local storage only accepts strings
 
   const writeTask = ()=>{
     fetch("/tasks", {

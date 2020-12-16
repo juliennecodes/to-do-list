@@ -12,3 +12,5 @@ Issues
 
 
 #I think there is still a problem with writing more than five tasks. Disabling the textbox and button prevents it but I think manually writing the code in the console still permits it. Do I fix that issue in the client or the server?
+
+#move helper functions from the server to their own dedicated file?
