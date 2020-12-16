@@ -4,9 +4,13 @@ export function Tasks({tasks, finishTask}){
     <ul className="title">
     Manageable to do list
       {
-        tasks.map(task => {
-          return <Task task={task} finishTask={finishTask}/>
-        })
+        tasks.map((task, index) =>
+          <Task
+            key = {index}
+            task={task}
+            finishTask={finishTask}
+          />
+        )
       }
     </ul>
   )

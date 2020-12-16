@@ -8,3 +8,11 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+const input = document.querySelector("input");
+
+input.addEventListener("keyup", (e)=>{
+  if(e.keyCode === 13){
+    document.querySelector("button").click();
+  }
+});
