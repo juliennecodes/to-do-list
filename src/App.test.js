@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 // import {Task} from './components/Task';
@@ -21,9 +22,8 @@ test('user types task in the text box and task shows up in the tasks component',
 
   userEvent.type(testTextBox, "Hum a tune");
   userEvent.click(testButton);
-  //post request happens here, server should be listening and sending back something, and then resolves the fetch request
   expect(testTextBox.value === "Hum a tune").toBeTruthy(); //just testing useEvent works
   expect(await screen.findByText(/Hum a tune/)).toBeInTheDocument();
-  screen.debug(testTextBox);
+  screen.debug();
 
 });

@@ -22,3 +22,5 @@ Issues
 #Find out more about options object, namely name option
 
 #what's rest api?
+
+#"not much use in testing small components unless there are interesting logic. Otherwise, just test higher level components", what other logic are there besides conditional logic? what's logic?

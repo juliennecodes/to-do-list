@@ -3,7 +3,7 @@ import {rest} from 'msw';
 import { setupServer } from 'msw/node';
 
 const server = setupServer(
-  rest.post("/cart", (req, res, ctx) => {
+  rest.post("/tasks", (req, res, ctx) => {
     const task = req.body.task;
     return res(
       ctx.status(200),
