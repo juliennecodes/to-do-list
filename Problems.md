@@ -14,3 +14,11 @@ Issues
 #I think there is still a problem with writing more than five tasks. Disabling the textbox and button prevents it but I think manually writing the code in the console still permits it. Do I fix that issue in the client or the server?
 
 #move helper functions from the server to their own dedicated file?
+
+# how do you test components whose results show up in another component? i.e textbox action and task result - Do you go and test the common ancestral component, App?
+
+#You can create a mock function with jest.fn(). If no implementation is given, the mock function will return undefined when invoked. Why use jest.fn() then? What use is a function that returns undefined?
+
+#Find out more about options object, namely name option
+
+#what's rest api?

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import {Tasks} from './pages/Tasks';
-import {Textbox} from './pages/Textbox';
+import {Tasks} from './components/Tasks';
+import {Textbox} from './components/Textbox';
 
 function App() {
   const[task, setTask] = useState([]);
@@ -30,7 +30,6 @@ function App() {
     .then(res => res.json())
     .then(updatedTasks => setTasks(updatedTasks));
   };
-
 
   const finishTask = (finishedTask)=>{
     fetch("/delete-task", {
