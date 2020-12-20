@@ -21,15 +21,27 @@ function App() {
     localStorage.setItem('serverTasks', JSON.stringify(tasks))
   }, [tasks]);
 
-  const writeTask = ()=>{
-    fetch("/tasks", {
+  // const writeTask = ()=>{
+  //   fetch("/tasks", {
+  //     method: "POST",
+  //     headers: {"content-type": "application/json"},
+  //     body: JSON.stringify({task})
+  //   })
+  //   .then(res => res.json())
+  //   .then(updatedTasks => setTasks(updatedTasks));
+  // };
+
+  const writeTask = async()=>{
+    const response = await fetch("/tasks", {
       method: "POST",
       headers: {"content-type": "application/json"},
       body: JSON.stringify({task})
-    })
-    .then(res => res.json())
-    .then(updatedTasks => setTasks(updatedTasks));
+    });
+    const updatedTasks = await response.json();
+    setTasks(updatedTasks);
   };
+
+
 
   const finishTask = (finishedTask)=>{
     fetch("/delete-task", {
