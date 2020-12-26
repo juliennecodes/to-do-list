@@ -53,4 +53,20 @@ Issues
 
 #fetch issue
 - production build -  fetch and res.json conflated and pass that in so that you can mock that conflated thing with the promise resolved already in test
-- dependency - 
+- dependency -
+
+
+#fetch issue
+- so how do you pass
+- from the react doc example, if the props id changes, then trigger fetch user data, and then sets it
+- the way it does this is by checking if user exists
+- how to apply it to to do list though
+- if tasks exists, ah, I don't know, hm, okay let's say there's an object with that particular task property, say you write task, hm, I don't think this is the right approach though, is it an ill-fitting solution?
+- so from the example, props object containing id is given to component
+- if there is no user, render loading
+- in the meantime, useEffect kicks in and fetches the data
+- using props.id, it fetches the information and sets the state of the component
+- once user exists, component is re-rendered with the fetched information
+- now how does this apply to to do list,
+- useEffect on tasks component, if tasks doesn't exist, return something empty
+- if tasks exists, fetch tasks, but hmm, if you do it this way, why not leave that in the app component?

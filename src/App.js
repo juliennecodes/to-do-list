@@ -21,27 +21,17 @@ function App() {
     localStorage.setItem('serverTasks', JSON.stringify(tasks))
   }, [tasks]);
 
-  const writeTask = ()=>{
-    fetch("/tasks", {
+  const writeTask = async()=>{
+    const response = await fetch("/tasks", {
       method: "POST",
       headers: {"content-type": "application/json"},
       body: JSON.stringify({task})
-    })
-    .then(res => res.json())
-    .then(updatedTasks => setTasks(updatedTasks));
+    });
+
+    const updatedTasks = await response.json();
+
+    setTasks(updatedTasks);
   };
-
-  // const writeTask = async()=>{
-  //   const response = await fetch("/tasks", {
-  //     method: "POST",
-  //     headers: {"content-type": "application/json"},
-  //     body: JSON.stringify({task})
-  //   });
-  //   const updatedTasks = await response.json();
-  //   setTasks(updatedTasks);
-  // };
-
-
 
   const finishTask = (finishedTask)=>{
     fetch("/delete-task", {
@@ -52,6 +42,8 @@ function App() {
     .then(res => res.json())
     .then(updatedTasks => setTasks(updatedTasks));
   };
+
+  // console.log("just testing if console log is being logged in npm test");
 
   return (
     <div className = "to-do-list">
