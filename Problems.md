@@ -70,3 +70,8 @@ Issues
 - now how does this apply to to do list,
 - useEffect on tasks component, if tasks doesn't exist, return something empty
 - if tasks exists, fetch tasks, but hmm, if you do it this way, why not leave that in the app component?
+
+#spyOn
+whenever fetch is happening, do this fetch instead
+-getting data, return data you what returned
+-other case,

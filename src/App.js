@@ -40,7 +40,10 @@ function App() {
       body: JSON.stringify({finishedTask})
     })
     .then(res => res.json())
-    .then(updatedTasks => setTasks(updatedTasks));
+    .then(updatedTasks => {
+      console.log("CLIENT SIDE DELETE REQUEST");
+      setTasks(updatedTasks)})
+      .catch(e => console.log(e));
   };
 
   // console.log("just testing if console log is being logged in npm test");
