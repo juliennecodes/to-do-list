@@ -5,9 +5,15 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import {server} from './mocks/handlers';
 
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+// beforeEach(()=>
+// //unmount rendered app
+// );
+// afterEach(()=> window.localStorage.removeItem('serverTasks'));
+
+
 
 // test('user types task in the text box and task shows up in the tasks component', async()=>{
 //   const {getByRole}= render(<App />);
@@ -48,6 +54,7 @@ afterAll(() => server.close())
 //   global.fetch.mockRestore();
 //   unmount();
 // });
+
 
 //------------------------------------------------------------------------------
 // test('user clicks on the task and task disappears', async() =>{
@@ -153,6 +160,46 @@ test('user types five tasks and button gets disabled', async() =>{
   userEvent.click(testButton);
 
   screen.debug();
+});
+
+// User clicks on the text box to type another task =>
+// Textbox and button gets disabled
+
+// test('user types in the fifth task and textbox and button gets disabled', async()=> {
+//   const {getByRole}= render(<App />);
+//
+//   const testTextBox = getByRole('textbox');
+//   const testButton = getByRole('button');
+//
+//   submitTaskFiveTimes("Hum a tune", testTextBox, testButton);
+//   screen.debug();
+//   expect(testButton).toBeDisabled();
+//
+// });
+// function submitTaskFiveTimes(task, textbox, button){
+//   for(let i = 0; i < 5; i++){
+//     userEvent.type(textbox, task);
+//     userEvent.click(button);
+//   };
+// };
+
+test('user types in the fifth task and textbox and button gets disabled', async()=> {
+  const {getByRole}= render(<App writeTask= {(task)=>{
+    fetch("/tasks", {
+      method: "POST",
+      headers: {"content-type": "application/json"},
+      body: JSON.stringify({task})
+    })
+    .then(res => res.json())
+  }}
+  />);
+
+  const testTextBox = getByRole('textbox');
+  const testButton = getByRole('button');
+
+  userEvent.type(testTextBox, "Hum a tune");
+  userEvent.click(testButton);
+  expect(testButton).toBeDisabled();
 
   expect(testButton).toBeDisabled();
 });

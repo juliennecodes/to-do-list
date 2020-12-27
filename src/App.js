@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {Tasks} from './components/Tasks';
 import {Textbox} from './components/Textbox';
 
-function App() {
+function App({writeTask}) {
   const[task, setTask] = useState([]);
   const [tasks, setTasks] = useState([]);
 
@@ -27,12 +27,11 @@ function App() {
       headers: {"content-type": "application/json"},
       body: JSON.stringify({task})
     });
-
     const updatedTasks = await response.json();
 
     setTasks(updatedTasks);
   };
-
+   
   const finishTask = (finishedTask)=>{
     fetch("/delete-task", {
       method: "DELETE",
@@ -51,7 +50,7 @@ function App() {
   return (
     <div className = "to-do-list">
       <Tasks tasks={tasks} finishTask ={finishTask}/>
-      <Textbox tasks = {tasks} setTask={setTask} writeTask={writeTask}/>
+      <Textbox tasks = {tasks} setTask={setTask} updateTasks={updateTasks}/>
     </div>
   );
 }

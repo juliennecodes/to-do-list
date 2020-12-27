@@ -33,8 +33,20 @@ const server = setupServer(
     return res(
       ctx.status(200),
       ctx.json(tasks)
+
     )
   }),
+  // rest.post("/fullTasks", (req, res, ctx) => {
+  //   const dummyTask = "Sing a song";
+  //   const task = req.body.task;
+  //
+  //   return res(
+  //     ctx.status(200),
+  //     ctx.json(
+  //       [dummyTask, dummyTask, dummyTask, dummyTask, task]
+  //     )
+  //   )
+  // }),
 );
 
 export {server};

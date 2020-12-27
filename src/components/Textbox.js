@@ -1,11 +1,11 @@
-export function Textbox({tasks, setTask, writeTask}){
+export function Textbox({tasks, setTask, updateTasks}){
   return (
     <>
     {
       tasks.length < 5 ?
       <div className="textbox">
         <input onChange={(e)=> setTask(e.target.value)} type="text"></input>
-        <button onClick={writeTask} type="button" name="button">Post</button>
+        <button onClick={updateTasks} type="button" name="button">Post</button>
       </div>
       :
       <div className="textbox">

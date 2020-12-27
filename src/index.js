@@ -4,7 +4,15 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App writeTask= {(task)=>{
+      fetch("/tasks", {
+        method: "POST",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify({task})
+      })
+      .then(res => res.json())
+    }}
+    />
   </React.StrictMode>,
   document.getElementById('root')
 );
