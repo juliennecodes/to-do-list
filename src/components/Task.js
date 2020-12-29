@@ -1,9 +1,6 @@
-export function Task({task, finishTask}){
+export function Task({ task, finishTask }) {
   return (
-    <li onClick={(e)=> {
-      console.log("TASK HAS BEEN CLICKED");
-      finishTask(e.target.textContent);}
-    } className="task">
+    <li onClick={(e) => finishTask(e.target.textContent)} className="task">
       {task}
     </li>
   );
