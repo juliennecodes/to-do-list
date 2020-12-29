@@ -1,21 +1,29 @@
-export function Textbox({tasks, setTask, writeTask}){
+import { useState } from "react";
+
+export function Textbox({ disabled, writeTask }) {
+  const [task, setTask] = useState("");
+
   return (
-    <>
-    {
-      tasks.length < 5 ?
-      <div className="textbox">
-        <input onChange={(e)=> setTask(e.target.value)} type="text"></input>
-        <button onClick={writeTask} type="button" name="button">Post</button>
-      </div>
-      :
-      <div className="textbox">
-        <input disabled type="text"></input>
-        <button disabled type="button" name="button">Post</button>
-      </div>
-    }
-    </>
+    <div className="textbox">
+      <input
+        disabled={disabled}
+        type="text"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+      ></input>
+      <button
+        disabled={disabled}
+        onClick={() => {
+          writeTask(task);
+          setTask("");
+        }}
+        type="button"
+      >
+        Post
+      </button>
+    </div>
   );
-};
+}
 
 //if testing textbox in isolation, what you want to say about it, when you click
 //button, write task gets called, clicking button calls function, doesn't matter

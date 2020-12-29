@@ -1,59 +1,46 @@
-import {useState, useEffect} from 'react';
-import {Tasks} from './components/Tasks';
-import {Textbox} from './components/Textbox';
+import { useState, useEffect } from "react";
+import { Tasks } from "./components/Tasks";
+import { Textbox } from "./components/Textbox";
 
-function App() {
-  const[task, setTask] = useState([]);
+export default function App() {
+
   const [tasks, setTasks] = useState([]);
 
-  useEffect(()=>{
-    document.querySelector("input").value = null;
-  }, [tasks]);
-
-  useEffect(()=>{
-    const previousTasks = localStorage.getItem('serverTasks');
-    if(previousTasks){
-      setTasks(JSON.parse(previousTasks ))
+  useEffect(() => {
+    const previousTasks = localStorage.getItem("serverTasks");
+    if (previousTasks) {
+      setTasks(JSON.parse(previousTasks));
     }
   }, []);
 
-  useEffect(()=>{
-    localStorage.setItem('serverTasks', JSON.stringify(tasks))
+  useEffect(() => {
+    localStorage.setItem("serverTasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const writeTask = async()=>{
+  const writeTask = async (task) => {
     const response = await fetch("/tasks", {
       method: "POST",
-      headers: {"content-type": "application/json"},
-      body: JSON.stringify({task})
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ task }),
     });
-
-    const updatedTasks = await response.json();
-
-    setTasks(updatedTasks);
+    setTasks(await response.json());
   };
 
-  const finishTask = (finishedTask)=>{
-    fetch("/delete-task", {
+  const finishTask = async (finishedTask) => {
+    const response = await fetch("/delete-task", {
       method: "DELETE",
-      headers: {"content-type": "application/json"},
-      body: JSON.stringify({finishedTask})
-    })
-    .then(res => res.json())
-    .then(updatedTasks => {
-      console.log("CLIENT SIDE DELETE REQUEST");
-      setTasks(updatedTasks)})
-      .catch(e => console.log(e));
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ finishedTask }),
+    });
+    setTasks(await response.json());
   };
 
   // console.log("just testing if console log is being logged in npm test");
 
   return (
-    <div className = "to-do-list">
-      <Tasks tasks={tasks} finishTask ={finishTask}/>
-      <Textbox tasks = {tasks} setTask={setTask} writeTask={writeTask}/>
+    <div className="to-do-list">
+      <Tasks tasks={tasks} finishTask={finishTask} />
+      <Textbox disabled={tasks.length >= 5} writeTask={writeTask} />
     </div>
   );
 }
-
-export default App;

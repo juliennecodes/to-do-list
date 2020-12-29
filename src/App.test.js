@@ -1,27 +1,22 @@
-import {act} from 'react-dom/test-utils';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import App from './App';
-import {server} from './mocks/handlers';
+import { act, render, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
+import App from "./App";
+import { server, clearTasks } from "./mocks/handlers";
 
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
+beforeAll(() => server.listen());
+afterEach(() => clearTasks());
+afterAll(() => server.close());
 
-// test('user types task in the text box and task shows up in the tasks component', async()=>{
-//   const {getByRole}= render(<App />);
-//
-//   const testTextBox = getByRole('textbox');
-//   const testButton = getByRole('button');
-//
-//   userEvent.type(testTextBox, "Hum a tune");
-//   userEvent.click(testButton);
-//   expect(testTextBox.value === "Hum a tune").toBeTruthy(); //just testing useEvent works
-//   expect(await screen.findByText(/Hum a tune/)).toBeInTheDocument();
-//   screen.debug();
-//
-// });
+test("user types task in the text box and task shows up in the tasks component", async () => {
+  const { findByText, getByRole } = render(<App />);
+  const textBox = getByRole("textbox");
+  const submitButton = getByRole("button");
+
+  submitTask("Hum a tune", textBox, submitButton);
+
+  expect(await findByText(/Hum a tune/)).toBeInTheDocument();
+});
 //------------------------------------------------------------------------------
 // test('user types task in the text box and task shows up in the tasks component', async()=>{
 //   const mockTasks = ["Hum a tune"];
@@ -50,27 +45,17 @@ afterAll(() => server.close())
 // });
 
 //------------------------------------------------------------------------------
-// test('user clicks on the task and task disappears', async() =>{
-//
-//   const {getByRole, findByText}= render(<App />);
-//   const testTextBox = getByRole('textbox');
-//   const testButton = getByRole('button');
-//   await userEvent.type(testTextBox, "Sing a song");
-//   testTextBox.value = null;
-//   userEvent.click(testButton);
-//
-//   await userEvent.type(testTextBox, "Hang christmas lights");
-//   userEvent.click(testButton);
-//
-//   const task =  await findByText(/Sing a song/);
-//   expect(task).toBeInTheDocument();
-//
-//   userEvent.click(task);
-//   screen.debug();
-//
-//   expect(await findByText(/Sing a song/)).not.toBeInTheDocument();
-//
-// });
+test("user clicks on the task and task disappears", async () => {
+  const { getByRole, getByText, findByText } = render(<App />);
+  const textBox = getByRole("textbox");
+  const submitButton = getByRole("button");
+  submitTask("Sing a song", textBox, submitButton);
+
+  const task = await waitFor(() => getByText(/Sing a song/));
+  userEvent.click(task);
+
+  await waitForElementToBeRemoved(() => getByText(/Sing a song/));
+});
 //this definitely works in the app, I checked the DOM in the developer tools
 //is the test failing because I don't know how to write it?
 //is the test failing because of the server?
@@ -123,38 +108,14 @@ afterAll(() => server.close())
 //so the textbox doesn't get cleared before the next fetch request is made?
 
 //------------------------------------------------------------------------------
-test('user types five tasks and button gets disabled', async() =>{
-  const {getByRole}= render(<App />);
-  const testTextBox = getByRole('textbox');
-  const testButton = getByRole('button');
-  userEvent.type(testTextBox, "Sing a song");
-  testTextBox.value = null;
+test("user types five tasks and button gets disabled", async () => {
+  const { getByRole } = render(<App />);
+  const textBox = getByRole("textbox");
+  const submitButton = getByRole("button");
 
-  userEvent.click(testButton);
+  nTimes(5, () => submitTask("Sing a song", textBox, submitButton));
 
-  userEvent.type(testTextBox, "Sing a song");
-  testTextBox.value = null;
-
-  userEvent.click(testButton);
-
-  userEvent.type(testTextBox, "Sing a song");
-  testTextBox.value = null;
-
-  userEvent.click(testButton);
-
-  userEvent.type(testTextBox, "Sing a song");
-  testTextBox.value = null;
-
-  userEvent.click(testButton);
-
-  userEvent.type(testTextBox, "Sing a song");
-  testTextBox.value = null;
-
-  userEvent.click(testButton);
-
-  screen.debug();
-
-  expect(testButton).toBeDisabled();
+  await waitFor(() => expect(submitButton).toBeDisabled());
 });
 //how do you hijack the fetch in this case?
 //you have a fetch that posts as well as fetch that deletes
@@ -168,3 +129,14 @@ test('user types five tasks and button gets disabled', async() =>{
 //act click didn't work
 
 //when you click a task, delete goes to server, verify delete goes to server
+
+function nTimes(n, action) {
+  for (let i = 0; i < n; i++) {
+    action();
+  }
+}
+
+function submitTask(taskName, textBox, submitButton) {
+  userEvent.type(textBox, taskName);
+  userEvent.click(submitButton);
+}
