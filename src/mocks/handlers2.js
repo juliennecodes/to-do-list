@@ -1,22 +1,31 @@
-app.use(express.json());
+import {rest} from 'msw';
+//rest namespace groups essentials needed for mocking a rest api
+import { setupServer } from 'msw/node';
 
-app.get("/tasks", (req, res) => {
-  res.json(tasks);
-});
+let tasks = [];
 
-app.post("/tasks", (req, res)=>{
-  const task = req.body.task;
-  addToTasksList(task);
-  res.json(tasks);
-});
+const server = setupServer(
+  rest.get("/tasks", (req, res, ctx) => {
+    console.log(`get request tasks is ${tasks}`);
+    return res(ctx.json(tasks));
+  }),
 
-app.delete("/delete-task", (req, res)=>{
-  const finishedTask = req.body.finishedTask;
-  deleteTask(finishedTask);
-  res.json(tasks);
-});
+  rest.post("/tasks", (req, res, ctx) => {
+    const task = req.body.task;
+    addToTasksList(task);
+    console.log(`post request tasks is ${tasks}`);
+    return res(ctx.json(tasks));
+  }),
 
-app.listen(8000, () => console.log("Listening on port 8000"));
+  rest.delete("/delete-task", (req, res, ctx)=> {
+    const finishedTask = req.body.finishedTask;
+    deleteTask(finishedTask);
+    console.log(`delete request tasks is ${tasks}`);
+    return res(ctx.json(tasks));
+  }),
+);
+
+export {server};
 
 function addToTasksList(task){
   const updatedTasks = [...tasks, task];
