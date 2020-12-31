@@ -35,6 +35,13 @@ const server = setupServer(
       ctx.json(tasks)
     )
   }),
+
+  rest.get("/cleanup", (req, res, ctx) => {
+    tasks = [];
+    return res(
+      ctx.json(200)
+    )
+  }),
 );
 
 export {server};

@@ -4,9 +4,29 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import {server} from './mocks/handlers';
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+
+beforeAll(() => {
+  // Enable the mocking in tests.
+  server.listen()
+})
+
+afterEach(() => {
+  fetch("/cleanup")
+  .then(res => res.json())
+  .then(resBody => console.log(resBody));
+  // Reset any runtime handlers tests may use.
+  server.resetHandlers()
+})
+
+afterAll(() => {
+  // Clean up once the tests are done.
+  server.close()
+})
+
+//------------------------------------------------------------------------------
+// beforeAll(() => server.listen());
+// afterEach(() => server.resetHandlers());
+// afterAll(() => server.close());
 
 test('user types task in the text box and task shows up in the tasks component', async()=>{
   render(<App />);
@@ -46,7 +66,59 @@ test('user clicks on the task and task disappears', async() =>{
 
 
   screen.debug();
-
-
   expect(screen.queryByText(/Sing a song/)).not.toBeInTheDocument();
 });
+//------------------------------------------------------------------------------
+test('textbox and button is disabled after five tasks are typed', async()=>{
+  render(<App />);
+  const testTextBox = screen.getByRole('textbox');
+  const testButton = screen.getByRole('button');
+
+  userEvent.type(testTextBox, "Eat an orange");
+  userEvent.click(testButton);
+  await waitFor(()=> screen.findByText(/Eat an orange/));
+
+  userEvent.type(testTextBox, "Drink tea");
+  userEvent.click(testButton);
+  await waitFor(()=> screen.findByText(/Drink tea/));
+
+  userEvent.type(testTextBox, "Bake sweet potato");
+  userEvent.click(testButton);
+  await waitFor(()=> screen.findByText(/Bake sweet potato/));
+
+  userEvent.type(testTextBox, "Hydrate with water");
+  userEvent.click(testButton);
+  await waitFor(()=> screen.findByText(/Hydrate with water/));
+
+
+  userEvent.type(testTextBox, "Take a nap");
+  userEvent.click(testButton);
+  await waitFor(()=> screen.findByText(/Take a nap/));
+
+  screen.debug();
+  expect(testTextBox).toBeDisabled();
+  expect(testButton).toBeDisabled();
+});
+
+// async function typeFiveTasks(textbox, button){
+//   userEvent.type(textbox, "Eat an orange");
+//   userEvent.click(button);
+//   await waitFor(()=> screen.findByText(/Eat an orange/));
+//
+//   userEvent.type(textbox, "Drink tea");
+//   userEvent.click(button);
+//   await waitFor(()=> screen.findByText(/Drink tea/));
+//
+//   userEvent.type(textbox, "Bake sweet potato");
+//   userEvent.click(button);
+//   await waitFor(()=> screen.findByText(/Bake sweet potato/));
+//
+//   userEvent.type(textbox, "Hydrate with water");
+//   userEvent.click(button);
+//   await waitFor(()=> screen.findByText(/Hydrate with water/));
+//
+//
+//   userEvent.type(textbox, "Take a nap");
+//   userEvent.click(button);
+//   await waitFor(()=> screen.findByText(/Take a nap/));
+// }
