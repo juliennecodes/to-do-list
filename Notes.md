@@ -13,3 +13,9 @@
 
 #Note: A user can be the end-user of the application but it can also be another developer who uses a component you developed. Let's say you implemented an image gallery that's used by other developers of your team. You should test that it behaves correctly when props change for example.
   -from https://jkettmann.com/beginners-guide-to-testing-react/
+
+#Purpose of test is to make sure that we're confident in the thing we're shipping isn't broken. Once you feel pretty confident that the thing you're shipping isn't broken, then you don't need to write anymore tests.
+- As you add new features, refactor, change things, whatever, you're going to need to update test.
+- Write tests as long as you're making changes to the app.
+- If you're only refactoring, you shouldn't need to change tests at all.
+- from ask me anything about testing dodds youtube
